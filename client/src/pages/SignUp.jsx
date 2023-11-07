@@ -13,6 +13,8 @@ const SignUp = () => {
     e.preventDefault();
     try{
       setLoading(true);
+      setError(false);
+
  const res = await fetch("http://localhost:3000/api/auth/signup",{
       method: 'POST',
       headers: {
@@ -26,7 +28,6 @@ const SignUp = () => {
 setError(true);
 return;
     }
-    setError(false);
     }catch(err){
       setLoading(false);
       setError(true);
