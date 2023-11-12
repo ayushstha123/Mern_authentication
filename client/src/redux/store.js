@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-
+import userReducer from './user/userSlice'
 //It then exports a variable named store which is created by calling configureStore() with an object containing the reducer and middleware.
 export const store = configureStore({
-    reducer: {},//
+    reducer: {user:userReducer},//
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware({
-            serializableCheck: false``
+            serializableCheck: false
         });
     }
 

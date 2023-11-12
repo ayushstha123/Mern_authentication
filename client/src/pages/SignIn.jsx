@@ -1,40 +1,40 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { signInStart, signInFaliure, signInSuccess } from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignIn = () => {
-  const [loading,setLoading]=useState();
-  const [error,setError]=useState(false);
+  const {loading,error}=useSelector((state)=>state.user)
   const [formData, setFormData] = useState({});
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      setLoading(true);
-      setError(false);
+    try {
+      dispatch(signInStart());
 
- const res = await fetch("http://localhost:3000/api/auth/signin",{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData),  
-    });
-    const data = await res.json();
-    setLoading(false);
-    if(data.success===false){
-setError(true);
-return;
+      const res = await fetch("http://localhost:3000/api/auth/signin", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+dispatch(signInFaliure(data.message));
+        return;
+      }      
+      dispatch(signInSuccess(data));
+      navigate('/');
+    } catch (err) {
+      dispatch(signInFaliure(err));
     }
-    navigate('/');
-    }catch(err){
-      setLoading(false);
-      setError(true);
-    }
-   
+
   }
 
   return (
@@ -64,7 +64,7 @@ return;
             <button
               type="submit"
               className="w-full text-center py-3 rounded bg-green-600 text-white hover:bg-green-500 focus:outline-none my-1"
-            >{loading ? 'Loading...':'SIGN IN'}</button>
+            >{loading ? 'Loading...' : 'SIGN IN'}</button>
           </div>
 
           <div className="flex text-gray-800 mt-6 gap-3">
@@ -73,7 +73,7 @@ return;
               Sign up
             </Link>.
           </div>
-          <p className='text-red-500'>{error ? 'Something went wrong!!':''}</p>
+          <p className='text-red-500'>{error ? error || 'Something went wrong!!' : ''}</p>
 
         </div>
       </form>
