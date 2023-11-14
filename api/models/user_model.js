@@ -13,6 +13,10 @@ const userSchema= new mongoose.Schema({
         type:String,
         required:true,
         unique:true,
+    },
+    profilePic:{
+        type:String,
+        default:"",
     }
     
 },{timestamps:true});//timestamp true means two extra creation one time of creation and another is time of edit . mongo db automatically add these

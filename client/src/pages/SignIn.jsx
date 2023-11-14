@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signInStart, signInFaliure, signInSuccess } from '../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import OAuth from '../components/OAuth';
 
 const SignIn = () => {
-  const {loading,error}=useSelector((state)=>state.user)
+  const { loading, error } = useSelector((state) => state.user)
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,9 +27,9 @@ const SignIn = () => {
       });
       const data = await res.json();
       if (data.success === false) {
-dispatch(signInFaliure(data.message));
+        dispatch(signInFaliure(data.message));
         return;
-      }      
+      }
       dispatch(signInSuccess(data));
       navigate('/');
     } catch (err) {
@@ -42,7 +43,7 @@ dispatch(signInFaliure(data.message));
       <form onSubmit={handleSubmit} className="bg-gray-100 min-h-screen flex flex-col">
         <div className="container max-w-lg mx-auto flex-1 flex flex-col items-center justify-center ">
           <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
-            <h1 className="mb-8 text-3xl font-semibold text-center">Sign In</h1>
+            <h1 className="mb-8 text-3xl font-extralight text-center">Sign In</h1>
 
             <input
               type="text"
@@ -63,9 +64,11 @@ dispatch(signInFaliure(data.message));
 
             <button
               type="submit"
-              className="w-full text-center py-3 rounded bg-green-600 text-white hover:bg-green-500 focus:outline-none my-1"
+              className="w-full text-center text-sm py-3 rounded bg-green-600 text-white hover:bg-green-500 focus:outline-none my-1"
             >{loading ? 'Loading...' : 'SIGN IN'}</button>
+            <OAuth />
           </div>
+
 
           <div className="flex text-gray-800 mt-6 gap-3">
             Dont have an account?
@@ -73,7 +76,7 @@ dispatch(signInFaliure(data.message));
               Sign up
             </Link>.
           </div>
-          <p className='text-red-500'>{error ? error || 'Something went wrong!!' : ''}</p>
+          <p className='text-red-500'>{error ? (typeof error === 'string' ? error : 'Something went wrong!!') : ''}</p>
 
         </div>
       </form>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link ,useNavigate} from 'react-router-dom'
+import OAuth from '../components/OAuth';
 
 const SignUp = () => {
   const [loading,setLoading]=useState();
@@ -72,8 +73,8 @@ return;
               type="submit"
               className="w-full text-center py-3 rounded bg-green-600 text-white hover:bg-green-500 focus:outline-none my-1"
             >{loading ? 'Loading...':'SIGN UP'}</button>
+          <OAuth/>
           </div>
-
           <div className="flex text-gray-800 mt-6 gap-3">
             Already have an account?
             <Link to='/SignIn' className="no-underline border-b border-blue text-blue-500" href="../login/">
