@@ -16,7 +16,7 @@ const userSchema= new mongoose.Schema({
     },
     profilePic:{
         type:String,
-        default:"",
+        default:"https://www.freeiconspng.com/thumbs/profile-icon-png/am-a-19-year-old-multimedia-artist-student-from-manila--21.png",
     }
     
 },{timestamps:true});//timestamp true means two extra creation one time of creation and another is time of edit . mongo db automatically add these
