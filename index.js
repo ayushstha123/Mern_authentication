@@ -4,8 +4,11 @@ import dotenv from "dotenv";
 import cors from "cors";
 import userRoute from './api/route/user_route.js';
 import authRoute from './api/route/auth_route.js';
+import cookieParser from 'cookie-parser';
+
 dotenv.config();
 const app = express();
+app.use(cookieParser());
 app.use(cors())
 app.use(express.json());//allow the json as input of the backend
 const PORT = 3000;
