@@ -7,9 +7,12 @@ import authRoute from './api/route/auth_route.js';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
-const app = express();
+const app= express();
+app.use(cors());
 app.use(cookieParser());
-app.use(cors())
+
+
+
 app.use(express.json());//allow the json as input of the backend
 const PORT = 3000;
 mongoose.connect(process.env.MONGO).then(()=>{
